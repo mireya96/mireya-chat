@@ -84,9 +84,9 @@ namespace OnSale.Web.Controllers
         {
             AddUserViewModel model = new AddUserViewModel
             {
-                Countries = _combosHelper.GetComboCountries(),
-                Departments = _combosHelper.GetComboDepartments(0),
-                Cities = _combosHelper.GetComboCities(0),
+                //Countries = _combosHelper.GetComboCountries(),
+                //Departments = _combosHelper.GetComboDepartments(0),
+                //Cities = _combosHelper.GetComboCities(0),
             };
 
             return View(model);
@@ -105,13 +105,15 @@ namespace OnSale.Web.Controllers
                     imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "users");
                 }
 
+
+                // o UserType.Admin
                 User user = await _userHelper.AddUserAsync(model, imageId, UserType.User);
                 if (user == null)
                 {
-                    ModelState.AddModelError(string.Empty, "This email is already used.");
-                    model.Countries = _combosHelper.GetComboCountries();
-                    model.Departments = _combosHelper.GetComboDepartments(model.CountryId);
-                    model.Cities = _combosHelper.GetComboCities(model.DepartmentId);
+                    ModelState.AddModelError(string.Empty, "Este Email ya ha sido usado");
+                    //model.Countries = _combosHelper.GetComboCountries();
+                    //model.Departments = _combosHelper.GetComboDepartments(model.CountryId);
+                    //model.Cities = _combosHelper.GetComboCities(model.DepartmentId);
                     return View(model);
                 }
 
@@ -134,9 +136,9 @@ namespace OnSale.Web.Controllers
                 ModelState.AddModelError(string.Empty, response.Message);
             }
 
-            model.Countries = _combosHelper.GetComboCountries();
-            model.Departments = _combosHelper.GetComboDepartments(model.CountryId);
-            model.Cities = _combosHelper.GetComboCities(model.DepartmentId);
+            //model.Countries = _combosHelper.GetComboCountries();
+            //model.Departments = _combosHelper.GetComboDepartments(model.CountryId);
+            //model.Cities = _combosHelper.GetComboCities(model.DepartmentId);
             return View(model);
         }
 
@@ -193,12 +195,12 @@ namespace OnSale.Web.Controllers
                 LastName = user.LastName,
                 PhoneNumber = user.PhoneNumber,
                 ImageId = user.ImageId,
-                Cities = _combosHelper.GetComboCities(department.Id),
-                CityId = user.City.Id,
-                Countries = _combosHelper.GetComboCountries(),
-                CountryId = country.Id,
-                DepartmentId = department.Id,
-                Departments = _combosHelper.GetComboDepartments(country.Id),
+                //Cities = _combosHelper.GetComboCities(department.Id),
+                //CityId = user.City.Id,
+                //Countries = _combosHelper.GetComboCountries(),
+                //CountryId = country.Id,
+                //DepartmentId = department.Id,
+                //Departments = _combosHelper.GetComboDepartments(country.Id),
                 Id = user.Id,
                 Document = user.Document
             };
@@ -226,16 +228,16 @@ namespace OnSale.Web.Controllers
                 user.Address = model.Address;
                 user.PhoneNumber = model.PhoneNumber;
                 user.ImageId = imageId;
-                user.City = await _context.Cities.FindAsync(model.CityId);
-                user.Document = model.Document;
+                //user.City = await _context.Cities.FindAsync(model.CityId);
+                //user.Document = model.Document;
 
                 await _userHelper.UpdateUserAsync(user);
                 return RedirectToAction("Index", "Home");
             }
 
-            model.Cities = _combosHelper.GetComboCities(model.DepartmentId);
-            model.Countries = _combosHelper.GetComboCountries();
-            model.Departments = _combosHelper.GetComboDepartments(model.CityId);
+            //model.Cities = _combosHelper.GetComboCities(model.DepartmentId);
+            //model.Countries = _combosHelper.GetComboCountries();
+            //model.Departments = _combosHelper.GetComboDepartments(model.CityId);
             return View(model);
         }
 

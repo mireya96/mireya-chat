@@ -82,13 +82,13 @@ namespace OnSale.Web.Helpers
             User user = new User
             {
                 Address = model.Address,
-                Document = model.Document,
+                //Document = model.Document,
                 Email = model.Username,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 ImageId = imageId,
                 PhoneNumber = model.PhoneNumber,
-                City = await _context.Cities.FindAsync(model.CityId),
+                //City = await _context.Cities.FindAsync(model.CityId),
                 UserName = model.Username,
                 UserType = userType
             };
